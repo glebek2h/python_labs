@@ -1,4 +1,5 @@
 import numpy as np
+from poly import Poly
 
 
 class ClassOfFunctions:
@@ -8,44 +9,44 @@ class ClassOfFunctions:
         self.a = a
 
     def get_value(self, x):
-        return self.p_1(x) * np.sin(self.a * x) + self.p_2(x) * np.cos(self.a * x)
+        return self.p_1.get_value(x) * np.sin(self.a * x) + self.p_2.get_value(x) * np.cos(self.a * x)
 
     def __add__(self, class_instance):
+        if self.a != class_instance.a:
+            raise ValueError('param a of class instances is not equal')
         return ClassOfFunctions(self.p_1 + class_instance.p_1, self.p_2 + class_instance.p_2, self.a)
 
     def __sub__(self, class_instance):
         return ClassOfFunctions(self.p_1 - class_instance.p_1, self.p_2 - class_instance.p_2, self.a)
 
-    # return np.polyder(self.p1) * sin(self.a * x) + self.p1 * cos(self.a * x) + np.polyder(self.p2) * cos(self.a * x) - self.p2 * sin(self.a * x)
     def diff(self):
-        return ClassOfFunctions(np.polyder(self.p_1) - self.p_2, self.p_1 + np.polyder(self.p_2), self.a)
+        return ClassOfFunctions(self.p_1.diff() - self.p_2, self.p_1 + self.p_2.diff(), self.a)
 
     def print_in_readable_form(self):
-        ClassOfFunctions.print_polynomial(self.p_1.c)
+        self.p_1.print_polynomial(),
         print 'sin(', self.a, '* x ) +',
-        ClassOfFunctions.print_polynomial(self.p_2.c)
+        self.p_2.print_polynomial()
         print 'cos(', self.a, '* x )',
         print '\n'
 
-    @staticmethod
-    def print_polynomial(c):
-        print '(',
-        for i in range(len(c)):
-            print c[i], '* x ^', len(c) - i - 1,
-            if i != len(c) - 1:
-                print '+',
-            else:
-                print ') *',
 
-
-class1 = ClassOfFunctions(np.poly1d([4, 3, -2, 10]), np.poly1d([1, 2, 3, 4]), 10)
+class1 = ClassOfFunctions(Poly([1, 2, 3, -2, 10]), Poly([1, 2, 3, 4]), 10)
+print 'polynomial_1:'
 class1.print_in_readable_form()
 
-class2 = ClassOfFunctions(np.poly1d([1, 4, 10]), np.poly1d([3, 4]), 10)
+class2 = ClassOfFunctions(Poly([1, 4, 10]), Poly([4]), 10)
+print 'polynomial_2:'
 class2.print_in_readable_form()
 
-(class1 + class2).print_in_readable_form()
+# print 'polynomial_1 + polynomial_2:'
+# (class1 + class2).print_in_readable_form()
 
+print 'polynomial_1 - polynomial_2:'
+(class1 - class2).print_in_readable_form()
+
+print '(polynomial_1)`'
 class1.diff().print_in_readable_form()
 
 print class1.get_value(5)
+
+
