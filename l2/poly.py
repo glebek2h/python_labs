@@ -4,12 +4,12 @@ import copy
 class Poly:
 
     def __init__(self, c):
-        self.c = [x for x in c if x != 0]
+        self.c = c
 
     def get_value(self, x):
         s = 0
         for i in range(len(self.c)):
-            s += self.c[i] * x ^ (len(self.c) - 1)
+            s += self.c[i] * (x ** (len(self.c) - i - 1))
         return s
 
     def diff(self):
@@ -35,11 +35,13 @@ class Poly:
     def __sub__(self, class_instance):
         return Poly(Poly.sum_min_arr(self.c, class_instance.c, 'min'))
 
+    def __mul__(self, number):
+        return Poly(map(lambda x: x * number, self.c))
+
     @staticmethod
     def sum_min_arr(a, b, sum_or_min):
         a_copy = copy.deepcopy(a)
         b_copy = copy.deepcopy(b)
-        print a, b
         if len(a) < len(b):
             if len(a) == 1:
                 b_copy = [b[len(b) - 1]]
@@ -61,19 +63,4 @@ class Poly:
 
     @staticmethod
     def min(a, b):
-        print a, b
-        print list(map(lambda x, y: (x or 0) - (y or 0), a, b))
         return list(map(lambda x, y: (x or 0) - (y or 0), a, b))
-
-
-'''
-p1 = Poly([1, 2, 3, -2, 10])
-p1.print_polynomial()
-print ''
-p2 = Poly([1, 2, 3, 4])
-p2.print_polynomial()
-print ''
-(p1 + p2).print_polynomial()
-print ''
-(p1 - p2).print_polynomial()
-'''

@@ -20,7 +20,7 @@ class ClassOfFunctions:
         return ClassOfFunctions(self.p_1 - class_instance.p_1, self.p_2 - class_instance.p_2, self.a)
 
     def diff(self):
-        return ClassOfFunctions(self.p_1.diff() - self.p_2, self.p_1 + self.p_2.diff(), self.a)
+        return ClassOfFunctions(self.p_1.diff() - self.p_2 * self.a, self.p_1 * self.a + self.p_2.diff(), self.a)
 
     def print_in_readable_form(self):
         self.p_1.print_polynomial(),
@@ -38,15 +38,16 @@ class2 = ClassOfFunctions(Poly([1, 4, 10]), Poly([4]), 10)
 print 'polynomial_2:'
 class2.print_in_readable_form()
 
-# print 'polynomial_1 + polynomial_2:'
-# (class1 + class2).print_in_readable_form()
+print 'polynomial_1 + polynomial_2:'
+(class1 + class2).print_in_readable_form()
 
 print 'polynomial_1 - polynomial_2:'
 (class1 - class2).print_in_readable_form()
 
-print '(polynomial_1)`'
+print '(polynomial_1)`:'
 class1.diff().print_in_readable_form()
 
-print class1.get_value(5)
+print 'polynomial_1(2):'
+print class1.get_value(2)
 
 
