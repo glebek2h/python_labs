@@ -35,8 +35,28 @@ class Poly:
     def __sub__(self, class_instance):
         return Poly(Poly.sum_min_arr(self.c, class_instance.c, 'min'))
 
-    def __mul__(self, number):
-        return Poly(map(lambda x: x * number, self.c))
+    def __mul__(self, class_instance):
+        a = self.c
+        b = class_instance.c
+        poly_arr = []
+        for i in range(len(a)):
+            c = []
+            for k in range(0, len(a) * len(b)):
+                c.append('None')
+            pow_a = len(a) - i - 1
+            max_pow = 0
+            for j in range(len(b)):
+                pow_b = len(b) - j - 1
+                if (pow_a + pow_b) > max_pow:
+                    max_pow = pow_a + pow_b
+                if c[pow_a + pow_b] is 'None':
+                    c[pow_a + pow_b] = a[i] * b[j]
+                else:
+                    c[pow_a + pow_b] = c[i] + a[i] * b[j]
+            poly_arr.append(Poly([0 if x == 'None' else x for x in c[:max_pow + 1][::-1]]))
+        for i in range(1, len(poly_arr)):
+            poly_arr[0] += poly_arr[i]
+        return poly_arr[0]
 
     @staticmethod
     def sum_min_arr(a, b, sum_or_min):
@@ -62,3 +82,12 @@ class Poly:
     @staticmethod
     def min(a, b):
         return list(map(lambda x, y: (x or 0) - (y or 0), a, b))
+
+
+p1 = Poly([1, 0, 0, 2, 3, 4])
+p2 = Poly([1, 2, 1])
+p1.print_polynomial()
+print ''
+p2.print_polynomial()
+(p1 * p2).print_polynomial()
+print (p1 * p2).get_value(5)
