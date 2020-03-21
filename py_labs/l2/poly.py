@@ -1,4 +1,5 @@
 import copy
+import numbers
 
 
 class Poly:
@@ -21,13 +22,13 @@ class Poly:
 
     def print_polynomial(self):
         c = self.c
-        print '(',
+        print('(', end='')
         for i in range(len(c)):
-            print c[i],
+            print(c[i], end='')
             if i != len(c) - 1:
-                print '* x ^', len(c) - i - 1, '+',
+                print('* x ^', len(c) - i - 1, '+', end='')
             else:
-                print ')',
+                print(')', end='')
 
     def __add__(self, class_instance):
         return Poly(Poly.sum_min_arr(self.c, class_instance.c, 'sum'))
@@ -35,28 +36,31 @@ class Poly:
     def __sub__(self, class_instance):
         return Poly(Poly.sum_min_arr(self.c, class_instance.c, 'min'))
 
-    def __mul__(self, class_instance):
-        a = self.c
-        b = class_instance.c
-        poly_arr = []
-        for i in range(len(a)):
-            c = []
-            for k in range(0, len(a) * len(b)):
-                c.append('None')
-            pow_a = len(a) - i - 1
-            max_pow = 0
-            for j in range(len(b)):
-                pow_b = len(b) - j - 1
-                if (pow_a + pow_b) > max_pow:
-                    max_pow = pow_a + pow_b
-                if c[pow_a + pow_b] is 'None':
-                    c[pow_a + pow_b] = a[i] * b[j]
-                else:
-                    c[pow_a + pow_b] = c[i] + a[i] * b[j]
-            poly_arr.append(Poly([0 if x == 'None' else x for x in c[:max_pow + 1][::-1]]))
-        for i in range(1, len(poly_arr)):
-            poly_arr[0] += poly_arr[i]
-        return poly_arr[0]
+    def __mul__(self, number):
+        if isinstance(number, numbers.Number):
+            return Poly(list(map(lambda x: x * number, self.c)))
+        elif isinstance(number, Poly):
+            a = self.c
+            b = number.c
+            poly_arr = []
+            for i in range(len(a)):
+                c = []
+                for k in range(0, len(a) * len(b)):
+                    c.append('None')
+                pow_a = len(a) - i - 1
+                max_pow = 0
+                for j in range(len(b)):
+                    pow_b = len(b) - j - 1
+                    if (pow_a + pow_b) > max_pow:
+                        max_pow = pow_a + pow_b
+                    if c[pow_a + pow_b] is 'None':
+                        c[pow_a + pow_b] = a[i] * b[j]
+                    else:
+                        c[pow_a + pow_b] = c[i] + a[i] * b[j]
+                poly_arr.append(Poly([0 if x == 'None' else x for x in c[:max_pow + 1][::-1]]))
+            for i in range(1, len(poly_arr)):
+                poly_arr[0] += poly_arr[i]
+            return poly_arr[0]
 
     @staticmethod
     def sum_min_arr(a, b, sum_or_min):
@@ -87,7 +91,10 @@ class Poly:
 p1 = Poly([1, 0, 0, 2, 3, 4])
 p2 = Poly([1, 2, 1])
 p1.print_polynomial()
-print ''
+print('')
 p2.print_polynomial()
 (p1 * p2).print_polynomial()
-print (p1 * p2).get_value(5)
+print('\n', (p1 * p2).get_value(5))
+p1 = Poly([1, 0, 2])
+p2 = Poly([1, 0, -1])
+(p1 - p2).print_polynomial()

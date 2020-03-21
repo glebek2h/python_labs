@@ -1,3 +1,5 @@
+from functools import reduce
+
 import numpy as np
 
 
@@ -9,4 +11,4 @@ def super_duper_func():
     return reduce(lambda x, y: x + y * y if abs(y) > 8 else x, fourteen_col, 0)
 
 
-print super_duper_func()
+print(super_duper_func())

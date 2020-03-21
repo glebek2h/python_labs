@@ -1,11 +1,9 @@
-# python 3
-
 import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 
 
-def f(x, y):
+def f(x     , y):
     return 3 * x ** 2 * (np.sin(x)) ** 2 - 5 * np.exp(2 * y)
 
 
@@ -19,7 +17,8 @@ fig, ax = plt.subplots()
 CS = ax.contour(X, Y, Z)
 ax.clabel(CS, inline=1, fontsize=10)
 ax.set_title('Contour')
+plt.savefig('foo1.png', bbox_inches='tight')
 
 ax = Axes3D(fig)
 ax.plot_surface(X, Y, Z)
-plt.show()
+plt.savefig('foo2.png', bbox_inches='tight')

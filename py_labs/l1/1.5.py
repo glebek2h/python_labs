@@ -1,13 +1,12 @@
 import numpy as np
-arr = [10, 0, 0, 12, 1, 0 ,13, 0]
+
+arr = [10, 0, 0, 12, 1, 0, 13, 0]
 res = []
 while arr:
     item = arr.pop()
-    print(item, res)
     if item != 0:
         res.insert(0, item)
     else:
         res.append(item)
-    print(res)
 
 print(res)
