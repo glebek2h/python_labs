@@ -59,16 +59,16 @@ for i in range(m):  # применили fft к столбцам Х
 for i in range(n):  # применили fft к строкам Х
     Y[i, :] = fft(X[i, :])
 
-eps_0 = Y[52][60]
-eps_3 = Y[201][700]
-eps_17 = Y[21][60]
-eps_29 = Y[25][100]
-eps_39 = Y[31][60]
-eps_58 = Y[21][100]
-eps_72 = Y[26][60]
-eps_80 = Y[25][55]
-eps_90 = Y[24][22]
-eps_99 = Y[32][10]
+eps_0 = Y[52][60].real
+eps_3 = Y[201][700].real
+eps_17 = Y[21][60].real
+eps_29 = Y[25][100].real
+eps_39 = Y[31][60].real
+eps_58 = Y[21][100].real
+eps_72 = Y[26][60].real
+eps_80 = Y[25][55].real
+eps_90 = Y[24][22].real
+eps_99 = Y[32][10].real
 eps_arr = [eps_0, eps_3, eps_17, eps_29, eps_39, eps_58, eps_72, eps_80, eps_90, eps_99]
 
 Z_arr = []
